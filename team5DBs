@@ -1,0 +1,31 @@
+CREATE SCHEMA `team5DB` ; -- DB 생성
+-- 퀴즈 테이블 생성
+CREATE TABLE `team5DB`.`quizTBL` (
+  `quizNumber` INT NOT NULL,
+  `quizAnswer` VARCHAR(3) NOT NULL,
+  `quizLevel` INT NOT NULL,
+  `quizPoint` INT NOT NULL,
+  PRIMARY KEY (`quizNumber`));
+  -- 사용자 테이블 생성
+  CREATE TABLE `team5DB`.`userTBL` (
+  `userID` VARCHAR(13) NOT NULL,
+  `userPassword` VARCHAR(15) NOT NULL,
+  `addedPoint` INT NULL,
+  `userPoint` INT NULL,
+  PRIMARY KEY (`userID`));
+  -- 보상물품 테이블 생성, 기본키 보상 물품 맞는지 확인
+  CREATE TABLE `team5DB`.`rewardProductTBL` (
+  `productName` CHAR(10) NOT NULL,
+  `changedPoint` INT NULL,
+  PRIMARY KEY (`productName`));
+  -- 참여 테이블 생성, 외래키 double-check 
+  CREATE TABLE `team5DB`.`participationTBL` (
+  `quizNumber` INT NOT NULL,
+  `userID` VARCHAR(13) NOT NULL,
+  `userAnswer` VARCHAR(3) NULL,
+  `score` INT NOT NULL,
+  FOREIGN KEY (`quizNumber`) REFERENCES quizTBL(`quizNumber`),
+  FOREIGN KEY (`userID`) REFERENCES userTBL(`userID`),
+  PRIMARY KEY (`quizNumber`, `userID`));
+  -- 사용자 보상 테이블 생성 사용자ID = userID
+  -- 배출 및 검색 테이블 생성 사용자ID = userID
